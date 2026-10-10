@@ -142,7 +142,7 @@
     <None Include="HTMLPage.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="StyleSheet.css" />
+    <None Include="style.css" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

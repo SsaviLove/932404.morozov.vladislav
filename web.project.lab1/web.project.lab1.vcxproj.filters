@@ -18,7 +18,7 @@
     <None Include="HTMLPage.htm">
       <Filter>Исходные файлы</Filter>
     </None>
-    <None Include="StyleSheet.css">
+    <None Include="style.css">
       <Filter>Исходные файлы</Filter>
     </None>
   </ItemGroup>
