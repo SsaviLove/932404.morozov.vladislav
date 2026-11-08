@@ -51,13 +51,16 @@ main {
     border-radius: 10px;
 }
 
-    main img {
-        display: block;
-        margin: 0 auto 25px;
-        border-radius: 50%;
-        border: 5px solid var(--primary-color);
-        object-fit: cover;
-    }
+.avatar {
+    display: block;
+    margin: 0 auto 25px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+}
 
 section {
     margin-bottom: 30px;
@@ -193,7 +196,7 @@ footer {
     margin-top: 20px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
     .content
     {
     grid-template-columns: 1fr;
@@ -243,7 +246,7 @@ nav {
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 1 1 240px;
+    flex: 0 1 calc((100% - 40px) / 3);
     min-width: 0;
     padding: 15px;
     background-color: var(--accent-color);
@@ -318,6 +321,10 @@ nav {
     .places-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .hobby-card {
+        flex-basis: calc((100% - 20px) / 2);
+    }
 }
 
 @media (max-width: 600px) {
@@ -325,21 +332,120 @@ nav {
         grid-template-columns: 1fr;
     }
 
-.hobby-card {
-    flex-basis: 100%;
-}
-
-    .hobby-card img {
-        width: 90px;
-        height: 90px;
+    .hobby-card {
+        flex-basis: 100%;
     }
 
-nav {
-    flex-direction: column;
-    align-items: stretch;
+
+        .hobby-card img {
+            width: 90px;
+            height: 90px;
+        }
+
+    nav {
+        gap: 8px;
+    }
+
+        nav a {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
 }
 
-    nav a {
-        text-align: center;
-    }
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
 }
+
+    .toolbar button {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+.list-title {
+    color: var(--primary-color);
+    margin: 25px 0 12px;
+}
+
+.hobby-item {
+    position: relative;
+    padding: 15px;
+    background-color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.hobby-icon {
+    font-size: 28px;
+}
+
+.view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+    .view-grid .hobby-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding-top: 25px;
+    }
+
+.view-list .hobby-item {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.view-list .hobby-icon {
+    margin-right: 10px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 2px 9px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+body.dark-theme {
+    --background-color: #140C1C;
+    --main-background: #21152E;
+    --text-color: #EFE6F8;
+    --border-color: #7E4BA3;
+}
+
+    body.dark-theme .hobby-card,
+    body.dark-theme .project-card,
+    body.dark-theme .hobby-item {
+        background-color: #2E1F40;
+    }
+
+    body.dark-theme section h2,
+    body.dark-theme aside h3,
+    body.dark-theme .hobby-info h3,
+    body.dark-theme .list-title {
+        color: #D9B8F2;
+    }
+
+    body.dark-theme .active-section,
+    body.dark-theme section:hover {
+        background-color: #3A2752;
+    }
+
+    body.dark-theme footer {
+        background-color: #0B0710;
+    }
+
+    body.dark-theme aside {
+        background-color: rgba(33, 21, 46, 0.7) !important;
+    }

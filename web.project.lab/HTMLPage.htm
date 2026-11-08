@@ -20,7 +20,7 @@
     </header>
     <div class="content">
         <main>
-            <img src="myphoto.jpg" alt="Мой портрет" width="300" height="300">
+            <img class="avatar" src="myphoto.jpg" alt="Мой портрет" width="300" height="300">
             <nav>
                 <a href="#hobbies">Хобби</a>
                 <a href="#places">Любимые места</a>
@@ -28,6 +28,13 @@
                 <a href="#projects">Проекты</a>
                 <a href="#feedback">Обратная связь</a>
             </nav>
+
+            <div class="toolbar">
+                <button type="button" id="addHobbyBtn">Добавить хобби</button>
+                <button type="button" id="toggleViewBtn">Переключить вид</button>
+                <button type="button" id="toggleHobbiesBtn">Скрыть хобби</button>
+                <button type="button" id="themeBtn">Тёмная тема</button>
+            </div>
 
             <section id="hobbies" class="card">
                 <h2>Мои хобби</h2>
@@ -64,6 +71,25 @@
                             <p lang="ru">Создание визуальных композиций, плакатов и макетов.</p>
                         </div>
                     </article>
+                </div>
+
+                <h3 class="list-title">Список хобби</h3>
+                <div id="hobbyList" class="hobby-items view-grid">
+                    <div class="hobby-item">
+                        <span class="hobby-icon">🎨</span>
+                        <span class="hobby-name">Рисование</span>
+                        <button type="button" class="delete-btn">×</button>
+                    </div>
+                    <div class="hobby-item">
+                        <span class="hobby-icon">🏺</span>
+                        <span class="hobby-name">Керамика</span>
+                        <button type="button" class="delete-btn">×</button>
+                    </div>
+                    <div class="hobby-item">
+                        <span class="hobby-icon">📷</span>
+                        <span class="hobby-name">Фотография</span>
+                        <button type="button" class="delete-btn">×</button>
+                    </div>
                 </div>
             </section>
 

@@ -82,3 +82,133 @@ console.log("Средняя температура за весь период:",
 if (hottestTemp >= 30) {
     console.log("Рекомендуется предусмотреть навесы и воду для гостей.");
 }
+const sections = document.querySelectorAll("main section");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            sections.forEach((s) => s.classList.remove("active-section"));
+            entry.target.classList.add("active-section");
+        }
+    });
+}, { rootMargin: "-40% 0px -55% 0px" });
+
+sections.forEach((s) => observer.observe(s));
+
+
+const hobbyList = document.getElementById("hobbyList");
+const addHobbyBtn = document.getElementById("addHobbyBtn");
+const toggleViewBtn = document.getElementById("toggleViewBtn");
+const toggleHobbiesBtn = document.getElementById("toggleHobbiesBtn");
+const themeBtn = document.getElementById("themeBtn");
+const hobbiesSection = document.querySelector("#hobbies");
+
+function elementExists(element, description) {
+    if (!element) {
+        console.error(`Не найден элемент: ${description}. Действие не выполнено.`);
+        return false;
+    }
+    return true;
+}
+
+function createHobbyItem(name, icon = "🔥") {
+    const item = document.createElement("div");
+    item.classList.add("hobby-item");
+
+    const iconSpan = document.createElement("span");
+    iconSpan.className = "hobby-icon";
+    iconSpan.textContent = icon;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "hobby-name";
+    nameSpan.textContent = name;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "×";
+    deleteBtn.setAttribute("title", `Удалить «${name}»`);
+
+    item.append(iconSpan, nameSpan, deleteBtn);
+    return item;
+}
+
+function saveHobbies() {
+    const hobbies = [];
+    hobbyList.querySelectorAll(".hobby-item").forEach((item) => {
+        hobbies.push({
+            name: item.querySelector(".hobby-name").textContent,
+            icon: item.querySelector(".hobby-icon").textContent
+        });
+    });
+    localStorage.setItem("hobbies", JSON.stringify(hobbies));
+}
+
+function loadHobbies() {
+    const saved = localStorage.getItem("hobbies");
+    if (saved === null) {
+        return;
+    }
+    try {
+        const hobbies = JSON.parse(saved);
+        hobbyList.innerHTML = "";
+        hobbies.forEach((hobby) => hobbyList.append(createHobbyItem(hobby.name, hobby.icon)));
+    } catch (error) {
+        console.error("Ошибка чтения списка хобби из localStorage:", error);
+    }
+}
+
+function applyTheme(theme) {
+    const isDark = theme === "dark";
+    document.body.classList.toggle("dark-theme", isDark);
+    if (themeBtn) {
+        themeBtn.textContent = isDark ? "Светлая тема" : "Тёмная тема";
+    }
+}
+
+applyTheme(localStorage.getItem("theme"));
+
+if (elementExists(themeBtn, "кнопка темы #themeBtn")) {
+    themeBtn.addEventListener("click", () => {
+        const newTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
+        applyTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
+    });
+}
+
+if (elementExists(hobbyList, "контейнер #hobbyList")) {
+    loadHobbies();
+
+    hobbyList.addEventListener("click", (event) => {
+        if (event.target.classList.contains("delete-btn")) {
+            event.target.closest(".hobby-item").remove();
+            saveHobbies();
+        }
+    });
+
+    if (elementExists(addHobbyBtn, "кнопка #addHobbyBtn")) {
+        addHobbyBtn.addEventListener("click", () => {
+            const input = prompt("Введите название хобби:");
+            if (input === null || input.trim() === "") {
+                return;
+            }
+            hobbyList.append(createHobbyItem(input.trim()));
+            saveHobbies();
+        });
+    }
+
+    if (elementExists(toggleViewBtn, "кнопка #toggleViewBtn")) {
+        toggleViewBtn.addEventListener("click", () => {
+            hobbyList.classList.toggle("view-grid");
+            hobbyList.classList.toggle("view-list");
+        });
+    }
+}
+
+if (elementExists(toggleHobbiesBtn, "кнопка #toggleHobbiesBtn") &&
+    elementExists(hobbiesSection, "секция #hobbies")) {
+    toggleHobbiesBtn.addEventListener("click", () => {
+        const isHidden = hobbiesSection.classList.toggle("hidden");
+        toggleHobbiesBtn.textContent = isHidden ? "Показать хобби" : "Скрыть хобби";
+    });
+}
